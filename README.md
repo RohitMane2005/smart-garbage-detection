@@ -129,3 +129,18 @@ Garbage is within proximity of the person
 Cooldown ensures no duplicate captures
 
 📸 Only then is the full frame saved.
+
+## 🏗️ System Architecture
+
+```mermaid
+flowchart TD
+    A[User Uploads Video] --> B[Web Dashboard<br/>(Flask + HTML)]
+    B --> C[Video Processing Engine<br/>(Python)]
+    C --> D[YOLOv8 Object Detection]
+    D --> D1[Person Detection]
+    D --> D2[Garbage Detection]
+    D1 --> E[Littering Logic Engine]
+    D2 --> E
+    E --> F[Event Triggered<br/>(Save Full Frame)]
+    F --> G[Output Storage<br/>output_events/images]
+    G --> H[Results Page<br/>(Image Gallery UI)]
