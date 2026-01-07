@@ -133,7 +133,7 @@ Cooldown ensures no duplicate captures
 ## 🏗️ System Architecture
     </pre>
 
-</br>
+
 
 ```mermaid
 flowchart TD
