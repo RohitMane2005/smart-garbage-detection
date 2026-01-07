@@ -85,8 +85,8 @@ Copy code
 
 ## ⚙️ Setup Instructions
 
+<pre>
 ### 1️⃣ Create Virtual Environment
-```bash
 python -m venv .venv
 Activate:
 
@@ -131,6 +131,9 @@ Cooldown ensures no duplicate captures
 📸 Only then is the full frame saved.
 
 ## 🏗️ System Architecture
+    </pre>
+
+</br>
 
 ```mermaid
 flowchart TD
