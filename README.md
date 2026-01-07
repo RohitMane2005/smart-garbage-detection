@@ -93,14 +93,20 @@ Activate:
 bash
 Copy code
 .venv\Scripts\activate
+
+
 2️⃣ Install Dependencies
 bash
 Copy code
 pip install ultralytics opencv-python flask torch torchvision
+
+
 3️⃣ Run Detection (CLI)
 bash
 Copy code
 python src/main.py
+
+
 4️⃣ Run Web Application
 bash
 Copy code
