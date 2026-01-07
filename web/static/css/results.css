@@ -1,0 +1,115 @@
+/* ================= RESET ================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Inter", "Segoe UI", Arial, sans-serif;
+}
+
+/* ================= BACKGROUND ================= */
+body {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #020617, #0f172a);
+    color: #e5e7eb;
+}
+
+/* ================= NAVBAR ================= */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 30px;
+    background: rgba(255,255,255,0.05);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.navbar h1 {
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.back-btn {
+    text-decoration: none;
+    color: #22d3ee;
+    font-size: 0.85rem;
+}
+
+/* ================= GRID ================= */
+.dashboard {
+    padding: 30px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 24px;
+}
+
+/* ================= CARD ================= */
+.card {
+    background: rgba(255,255,255,0.06);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 18px 40px rgba(0,0,0,0.45);
+    transition: transform 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+}
+
+.card img {
+    width: 100%;
+    display: block;
+}
+
+/* ================= CARD INFO ================= */
+.card-info {
+    padding: 14px;
+}
+
+.card-info p {
+    font-size: 0.75rem;
+    color: #9ca3af;
+    word-break: break-all;
+}
+
+/* ================= BADGES ================= */
+.badge {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 6px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.badge.danger {
+    background: #7c2d12;
+    color: #ffedd5;
+}
+
+/* ================= NO DETECTION MESSAGE ================= */
+.no-detection {
+    margin: 120px auto;
+    max-width: 500px;
+    text-align: center;
+    background: rgba(255,255,255,0.06);
+    padding: 40px 30px;
+    border-radius: 14px;
+    box-shadow: 0 20px 45px rgba(0,0,0,0.4);
+}
+
+.no-detection .icon {
+    font-size: 3rem;
+    margin-bottom: 15px;
+}
+
+.no-detection h2 {
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+    color: #22c55e;
+}
+
+.no-detection p {
+    font-size: 0.9rem;
+    color: #9ca3af;
+    line-height: 1.5;
+}

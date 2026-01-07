@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Smart Garbage Detection | Upload</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/upload.css') }}">
+</head>
+<body>
+
+<!-- ===== NAVBAR ===== -->
+<nav class="navbar">
+    <h1>🚯 Smart Garbage Detection</h1>
+    <span class="status online">● Live</span>
+</nav>
+
+<!-- ===== UPLOAD CARD ===== -->
+<div class="container">
+    <h2>Upload CCTV Footage</h2>
+    <p class="subtitle">AI will detect littering events automatically</p>
+
+    <form method="POST" enctype="multipart/form-data" onsubmit="showLoader()">
+        <input type="file" name="video" accept="video/*" required>
+        <button type="submit">Upload & Analyze</button>
+    </form>
+</div>
+
+<!-- ===== LOADER ===== -->
+<div class="loader-overlay" id="loader">
+    <div class="loader-box">
+        <div class="spinner"></div>
+        <p>Analyzing video… Please wait</p>
+    </div>
+</div>
+
+<script>
+function showLoader() {
+    document.getElementById("loader").style.display = "flex";
+}
+</script>
+
+</body>
+</html>

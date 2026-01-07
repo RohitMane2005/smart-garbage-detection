@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Detection Results</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/results.css') }}">
+</head>
+<body>
+
+<nav class="navbar">
+    <h1>🚯 Detection Results</h1>
+    <a href="/" class="back-btn">← Upload New Video</a>
+</nav>
+
+{% if images and images|length > 0 %}
+
+<div class="dashboard">
+    {% for img in images %}
+    <div class="card">
+        <img src="{{ url_for('get_image', filename=img) }}" alt="Detected">
+        <div class="card-info">
+            <span class="badge danger">Littering Detected</span>
+            <p>{{ img }}</p>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% else %}
+
+<!-- ===== NO DETECTION MESSAGE ===== -->
+<div class="no-detection">
+    <div class="icon">✅</div>
+    <h2>No Littering Detected</h2>
+    <p>
+        The AI analysis did not find any person throwing garbage in this video.
+        The area appears clean and compliant.
+    </p>
+</div>
+
+{% endif %}
+
+</body>
+
+</html>

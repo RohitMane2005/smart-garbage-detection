@@ -1,0 +1,15 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Models (optional – you can remove if you want)
+models/*.pt
+
+# Uploads & outputs
+uploads/
+output_events/
+
+# OS
+.DS_Store
+Thumbs.db
