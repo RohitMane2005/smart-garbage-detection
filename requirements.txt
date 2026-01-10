@@ -1,8 +1,17 @@
 flask==3.0.0
 gunicorn==21.2.0
+
+# YOLO
 ultralytics==8.0.230
+
+# OpenCV (headless only)
 opencv-python-headless==4.9.0.80
-numpy
-torch
-torchvision
-werkzeug
+
+# Core
+numpy==2.2.6
+
+# CPU-only PyTorch
+torch==2.9.1+cpu
+torchvision==0.24.1+cpu
+
+--extra-index-url https://download.pytorch.org/whl/cpu
