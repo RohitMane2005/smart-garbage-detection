@@ -11,13 +11,17 @@ from detectors.garbage_detector import detect_garbage
 from detectors.littering_detector import LitteringDetector
 
 
-SKIP_FRAMES = 5
-RESIZE_DIM = (640, 360)
+# ===== PERFORMANCE OPTIMIZATION FOR RENDER =====
+SKIP_FRAMES = 8
+RESIZE_DIM = (480, 270)
 
 
 def main(video_path):
     print("[INFO] Loading YOLO model...")
-    model = YOLO(MODEL_PATH)   # use yolov8n.pt for best speed
+
+    # Load YOLOv8 nano model (fastest)
+    model = YOLO(MODEL_PATH)
+    model.fuse()   # CPU optimization (VERY IMPORTANT for Render)
 
     detector = LitteringDetector()
     cap = open_video(video_path)
@@ -35,31 +39,18 @@ def main(video_path):
 
         frame = cv2.resize(frame, RESIZE_DIM)
 
+        # YOLO inference
         results = model(frame, verbose=False)[0]
 
         persons = detect_persons(results, model, CONF_THRESHOLD)
         garbage = detect_garbage(results)
 
+        # Event detection
         if detector.is_littering(persons, garbage):
             path = save_full_frame(frame, EVENT_DIR)
             print(f"[EVENT] Littering detected → {path}")
 
-        annotated = frame.copy()
-
-        for p in persons:
-            x1, y1, x2, y2 = map(int, p)
-            cv2.rectangle(annotated, (x1,y1), (x2,y2), (0,255,0), 2)
-
-        for g in garbage:
-            gx1, gy1, gx2, gy2 = map(int, g)
-            cv2.rectangle(annotated, (gx1,gy1), (gx2,gy2), (0,0,255), 2)
-
-        cv2.imshow("Smart Garbage Detection", annotated)
-        if cv2.waitKey(1) & 0xFF == ord("q"):
-            break
-
     close_video(cap)
-    cv2.destroyAllWindows()
     print("[INFO] Processing finished")
 
 

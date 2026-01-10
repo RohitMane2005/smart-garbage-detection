@@ -10,7 +10,8 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 UPLOAD_FOLDER = os.path.join(BASE_DIR, "..", "uploads")
 IMAGE_FOLDER = os.path.join(BASE_DIR, "..", "output_events", "images")
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder="static", template_folder="templates")
+
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
@@ -65,6 +66,6 @@ def get_image(filename):
     return send_from_directory(IMAGE_FOLDER, filename)
 
 
-if __name__ == "__main__":
-    print("[INFO] Flask server started")
-    app.run(debug=True)
+# Required for gunicorn
+app = app
+
