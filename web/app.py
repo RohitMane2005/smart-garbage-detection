@@ -69,3 +69,6 @@ def get_image(filename):
 # Required for gunicorn
 app = app
 
+if __name__ == "__main__":
+    print("[INFO] Flask server started (local)")
+    app.run(host="127.0.0.1", port=5000, debug=True)
