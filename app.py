@@ -1,0 +1,95 @@
+import os
+import sys
+import subprocess
+from flask import Flask, render_template, request, redirect, url_for, send_from_directory
+from werkzeug.utils import secure_filename
+
+# ================= PATHS =================
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+UPLOAD_FOLDER = os.path.join(BASE_DIR, "uploads")
+IMAGE_FOLDER = os.path.join(BASE_DIR, "output_events", "images")
+
+<<<<<<< HEAD:web/app.py
+app = Flask(__name__)
+=======
+# ================= FLASK APP =================
+app = Flask(__name__, static_folder="static", template_folder="templates")
+>>>>>>> before-last-commit:app.py
+app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
+
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+os.makedirs(IMAGE_FOLDER, exist_ok=True)
+
+
+# ================= UTILS =================
+def clear_old_results():
+<<<<<<< HEAD:web/app.py
+    for f in os.listdir(IMAGE_FOLDER):
+        os.remove(os.path.join(IMAGE_FOLDER, f))
+=======
+    if not os.path.exists(IMAGE_FOLDER):
+        return
+
+    for item in os.listdir(IMAGE_FOLDER):
+        item_path = os.path.join(IMAGE_FOLDER, item)
+        try:
+            if os.path.isfile(item_path):
+                os.remove(item_path)
+            elif os.path.isdir(item_path):
+                shutil.rmtree(item_path)
+        except Exception as e:
+            print(f"[WARN] Could not delete {item_path}: {e}")
+>>>>>>> before-last-commit:app.py
+
+
+# ================= ROUTES =================
+@app.route("/", methods=["GET", "POST"])
+def upload_video():
+    if request.method == "POST":
+        clear_old_results()
+
+        file = request.files.get("video")
+        if not file or file.filename == "":
+            return "No video uploaded", 400
+
+        filename = secure_filename(file.filename)
+        video_path = os.path.join(UPLOAD_FOLDER, filename)
+        file.save(video_path)
+
+        # Run YOLO processing
+        subprocess.run(
+            [
+                sys.executable,
+                os.path.join(BASE_DIR, "src", "main.py"),
+                video_path,
+            ],
+            check=True,
+        )
+
+        return redirect(url_for("results"))
+
+    return render_template("upload.html")
+
+
+@app.route("/results")
+def results():
+    images = os.listdir(IMAGE_FOLDER)
+    return render_template("results.html", images=images)
+
+
+@app.route("/images/<filename>")
+def get_image(filename):
+    return send_from_directory(IMAGE_FOLDER, filename)
+
+
+<<<<<<< HEAD:web/app.py
+if __name__ == "__main__":
+    print("[INFO] Flask server started")
+    app.run(debug=True)
+=======
+# ================= ENTRY POINT =================
+if __name__ == "__main__":
+    print("[INFO] Flask server started")
+    app.run(host="0.0.0.0", port=10000)
+>>>>>>> before-last-commit:app.py
