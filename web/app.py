@@ -1,6 +1,7 @@
 import os
 import sys
 import subprocess
+import shutil
 from flask import Flask, render_template, request, redirect, url_for, send_from_directory
 from werkzeug.utils import secure_filename
 
@@ -17,8 +18,19 @@ os.makedirs(IMAGE_FOLDER, exist_ok=True)
 
 
 def clear_old_results():
-    for f in os.listdir(IMAGE_FOLDER):
-        os.remove(os.path.join(IMAGE_FOLDER, f))
+    if not os.path.exists(IMAGE_FOLDER):
+        return
+
+    for item in os.listdir(IMAGE_FOLDER):
+        item_path = os.path.join(IMAGE_FOLDER, item)
+
+        try:
+            if os.path.isfile(item_path):
+                os.remove(item_path)
+            elif os.path.isdir(item_path):
+                shutil.rmtree(item_path)
+        except Exception as e:
+            print(f"[WARN] Could not delete {item_path}: {e}")
 
 
 @app.route("/", methods=["GET", "POST"])

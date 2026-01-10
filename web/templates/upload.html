@@ -25,20 +25,41 @@
         <button type="submit">Upload & Analyze</button>
     </form>
 </div>
-
-<!-- ===== LOADER ===== -->
+<!-- ===== PROGRESS OVERLAY ===== -->
 <div class="loader-overlay" id="loader">
     <div class="loader-box">
-        <div class="spinner"></div>
-        <p>Analyzing video… Please wait</p>
+        <p class="loading-text">Analyzing video…</p>
+
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+
+        <p class="progress-percent" id="progressText">0%</p>
     </div>
 </div>
 
 <script>
+let progress = 0;
+let interval = null;
+
 function showLoader() {
     document.getElementById("loader").style.display = "flex";
+
+    const bar = document.getElementById("progressBar");
+    const text = document.getElementById("progressText");
+
+    interval = setInterval(() => {
+        if (progress < 90) {
+            progress += Math.random() * 5;
+            progress = Math.min(progress, 90);
+
+            bar.style.width = progress + "%";
+            text.innerText = Math.floor(progress) + "%";
+        }
+    }, 400);
 }
 </script>
+
 
 </body>
 </html>
