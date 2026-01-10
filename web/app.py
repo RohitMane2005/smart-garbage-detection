@@ -1,7 +1,6 @@
 import os
 import sys
 import subprocess
-import shutil
 from flask import Flask, render_template, request, redirect, url_for, send_from_directory
 from werkzeug.utils import secure_filename
 
@@ -10,8 +9,7 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 UPLOAD_FOLDER = os.path.join(BASE_DIR, "..", "uploads")
 IMAGE_FOLDER = os.path.join(BASE_DIR, "..", "output_events", "images")
 
-app = Flask(__name__, static_folder="static", template_folder="templates")
-
+app = Flask(__name__)
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
@@ -19,19 +17,8 @@ os.makedirs(IMAGE_FOLDER, exist_ok=True)
 
 
 def clear_old_results():
-    if not os.path.exists(IMAGE_FOLDER):
-        return
-
-    for item in os.listdir(IMAGE_FOLDER):
-        item_path = os.path.join(IMAGE_FOLDER, item)
-
-        try:
-            if os.path.isfile(item_path):
-                os.remove(item_path)
-            elif os.path.isdir(item_path):
-                shutil.rmtree(item_path)
-        except Exception as e:
-            print(f"[WARN] Could not delete {item_path}: {e}")
+    for f in os.listdir(IMAGE_FOLDER):
+        os.remove(os.path.join(IMAGE_FOLDER, f))
 
 
 @app.route("/", methods=["GET", "POST"])
@@ -66,9 +53,6 @@ def get_image(filename):
     return send_from_directory(IMAGE_FOLDER, filename)
 
 
-# Required for gunicorn
-app = app
-
 if __name__ == "__main__":
-    print("[INFO] Flask server started (local)")
-    app.run(host="127.0.0.1", port=5000, debug=True)
+    print("[INFO] Flask server started")
+    app.run(debug=True)
