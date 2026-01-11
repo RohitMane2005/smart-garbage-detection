@@ -2,5 +2,5 @@ flask
 ultralytics
 opencv-python-headless
 numpy
-torch
+torch>=2.2,<2.3
 torchvision
