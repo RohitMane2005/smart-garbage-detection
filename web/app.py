@@ -54,6 +54,7 @@ def upload_video():
 
         return redirect(url_for("results"))
 
+
     return render_template("upload.html")
 
 
